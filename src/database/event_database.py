@@ -460,6 +460,6 @@ if __name__ == "__main__":
     detector = AdvancedEventDetector(db)
     crowd = detector.detect_crowd_gathering(100.0)
     if crowd:
-        print(f"\n🚨 Crowd detected: {crowd}")
+        print(f"\n Crowd detected: {crowd}")
     
     db.close()
