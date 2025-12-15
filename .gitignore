@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Data files - Don't upload large files
+data/videos/*.mp4
+data/videos/*.avi
+data/models/*.pt
+data/outputs/*.json
+*.db
+data/outputs/chroma_db/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Keep directory structure but not files
+!data/videos/.gitkeep
+!data/models/.gitkeep
+!data/outputs/.gitkeep
+data/outputs/*.mp4
+

@@ -1,0 +1,32 @@
+# Computer Vision & Deep Learning
+opencv-python>=4.8.0
+ultralytics>=8.3.0
+torch>=2.6.0
+torchvision>=0.20.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# LangChain & RAG (Week 2)
+langchain>=0.3.0
+langchain-community>=0.3.0
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+gpt4all>=2.8.0
+
+# API & Web (Week 3)
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+
+# Utilities
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+tqdm>=4.66.0
+
+# LangChain & RAG (Week 2)
+langchain>=0.3.0
+langchain-community>=0.3.0
+langchain-core>=0.3.0
+chromadb>=0.5.0
+sentence-transformers>=3.0.0
+gpt4all>=2.8.0
