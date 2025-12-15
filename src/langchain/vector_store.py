@@ -38,9 +38,9 @@ class SurveillanceVectorStore:
         )
         
         # Initialize sentence transformer for embeddings
-        print("🔄 Loading embedding model...")
+        print(" Loading embedding model...")
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
-        print("✅ Embedding model loaded!")
+        print(" Embedding model loaded!")
         
         self.event_counter = 0
     
@@ -141,12 +141,12 @@ class SurveillanceVectorStore:
         Args:
             detection_json_path: Path to detection JSON file
         """
-        print(f"📥 Loading detection results from: {detection_json_path}")
+        print(f" Loading detection results from: {detection_json_path}")
         
         with open(detection_json_path, 'r') as f:
             events = json.load(f)
         
-        print(f"📊 Found {len(events)} events to index")
+        print(f" Found {len(events)} events to index")
         
         # Prepare data for batch insertion
         documents = []
@@ -174,7 +174,7 @@ class SurveillanceVectorStore:
             ids.append(f"detection_{i}")
         
         # Batch insert
-        print("🔄 Creating embeddings and indexing...")
+        print(" Creating embeddings and indexing...")
         embeddings = self.embedding_model.encode(documents).tolist()
         
         self.collection.add(
@@ -184,7 +184,7 @@ class SurveillanceVectorStore:
             ids=ids
         )
         
-        print(f"✅ Indexed {len(events)} detection events")
+        print(f" Indexed {len(events)} detection events")
         self.event_counter += len(events)
     
     def index_tracking_results(self, tracking_json_path: str):
@@ -194,13 +194,13 @@ class SurveillanceVectorStore:
         Args:
             tracking_json_path: Path to tracking JSON file
         """
-        print(f"📥 Loading tracking results from: {tracking_json_path}")
+        print(f" Loading tracking results from: {tracking_json_path}")
         
         with open(tracking_json_path, 'r') as f:
             report = json.load(f)
         
         tracks = report.get('tracks', [])
-        print(f"📊 Found {len(tracks)} tracks to index")
+        print(f" Found {len(tracks)} tracks to index")
         
         # Prepare data
         documents = []
@@ -230,7 +230,7 @@ class SurveillanceVectorStore:
             ids.append(f"track_{track['track_id']}")
         
         # Batch insert
-        print("🔄 Creating embeddings and indexing...")
+        print(" Creating embeddings and indexing...")
         embeddings = self.embedding_model.encode(documents).tolist()
         
         self.collection.add(
@@ -240,7 +240,7 @@ class SurveillanceVectorStore:
             ids=ids
         )
         
-        print(f"✅ Indexed {len(tracks)} tracks")
+        print(f" Indexed {len(tracks)} tracks")
         self.event_counter += len(tracks)
     
     def search(self, query: str, n_results: int = 10, 
@@ -256,7 +256,7 @@ class SurveillanceVectorStore:
         Returns:
             Search results dictionary
         """
-        print(f"\n🔍 Searching for: '{query}'")
+        print(f"\n Searching for: '{query}'")
         
         # Create query embedding
         query_embedding = self.embedding_model.encode([query])[0].tolist()
@@ -268,7 +268,7 @@ class SurveillanceVectorStore:
             where=filter_dict
         )
         
-        print(f"✅ Found {len(results['documents'][0])} results")
+        print(f" Found {len(results['documents'][0])} results")
         
         return {
             'documents': results['documents'][0],
@@ -343,20 +343,20 @@ class SurveillanceVectorStore:
     
     def clear_database(self):
         """Clear all data from vector store"""
-        print("⚠️  Clearing vector database...")
+        print("  Clearing vector database...")
         self.client.delete_collection("surveillance_events")
         self.collection = self.client.get_or_create_collection(
             name="surveillance_events",
             metadata={"description": "Surveillance video events and tracks"}
         )
         self.event_counter = 0
-        print("✅ Database cleared")
+        print(" Database cleared")
 
 
 # Usage Example and Testing
 if __name__ == "__main__":
     print("=" * 70)
-    print("🎯 VECTOR DATABASE SETUP & TESTING")
+    print(" VECTOR DATABASE SETUP & TESTING")
     print("=" * 70)
     
     # Initialize vector store
@@ -370,53 +370,53 @@ if __name__ == "__main__":
     
     # Get statistics
     stats = vector_store.get_statistics()
-    print(f"\n📊 Vector Database Statistics:")
+    print(f"\n Vector Database Statistics:")
     print(f"   Total indexed items: {stats['total_indexed']}")
     
     # Test searches
     print("\n" + "=" * 70)
-    print("🔍 TESTING SEMANTIC SEARCH")
+    print(" TESTING SEMANTIC SEARCH")
     print("=" * 70)
     
     # Test 1: Search for people
-    print("\n1️⃣ Search: 'people walking'")
+    print("\n Search: 'people walking'")
     results = vector_store.search("people walking", n_results=5)
     for i, (doc, meta, dist) in enumerate(zip(results['documents'], 
                                                results['metadatas'], 
                                                results['distances'])):
         print(f"\n   Result {i+1}:")
-        print(f"   📝 {doc}")
-        print(f"   🏷️  Type: {meta['object_type']}, Color: {meta['color']}")
-        print(f"   📏 Relevance: {1 - dist:.3f}")
+        print(f"    {doc}")
+        print(f"     Type: {meta['object_type']}, Color: {meta['color']}")
+        print(f"    Relevance: {1 - dist:.3f}")
     
     # Test 2: Search by color
-    print("\n2️⃣ Search: 'blue objects'")
+    print("\n Search: 'blue objects'")
     results = vector_store.search_by_color("blue", n_results=5)
     for i, (doc, meta) in enumerate(zip(results['documents'], 
                                         results['metadatas'])):
         print(f"\n   Result {i+1}:")
-        print(f"   📝 {doc}")
-        print(f"   🏷️  {meta['object_type']}")
+        print(f"   {doc}")
+        print(f"    {meta['object_type']}")
     
     # Test 3: Search for vehicles
-    print("\n3️⃣ Search: 'vehicles or cars'")
+    print("\n Search: 'vehicles or cars'")
     results = vector_store.search("vehicles or cars", n_results=5)
     for i, (doc, meta) in enumerate(zip(results['documents'], 
                                         results['metadatas'])):
         print(f"\n   Result {i+1}:")
-        print(f"   📝 {doc}")
-        print(f"   🏷️  {meta['object_type']}")
+        print(f"   {doc}")
+        print(f"     {meta['object_type']}")
     
     # Test 4: Search for suspicious behavior
-    print("\n4️⃣ Search: 'suspicious or unusual behavior'")
+    print("\n Search: 'suspicious or unusual behavior'")
     results = vector_store.search("suspicious or unusual behavior", n_results=5)
     for i, (doc, meta) in enumerate(zip(results['documents'], 
                                         results['metadatas'])):
         print(f"\n   Result {i+1}:")
-        print(f"   📝 {doc}")
+        print(f"    {doc}")
         if meta.get('has_behaviors'):
-            print(f"   ⚠️  Behaviors detected: {meta['behavior_count']}")
+            print(f"     Behaviors detected: {meta['behavior_count']}")
     
     print("\n" + "=" * 70)
-    print("✅ VECTOR DATABASE SETUP COMPLETE!")
+    print(" VECTOR DATABASE SETUP COMPLETE!")
     print("=" * 70)
