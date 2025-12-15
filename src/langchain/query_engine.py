@@ -37,9 +37,9 @@ class SurveillanceQueryEngine:
         self.vector_store = vector_store
         
         # Initialize GPT4All for response generation
-        print("🔄 Loading language model...")
+        print(" Loading language model...")
         self.llm = GPT4All("Meta-Llama-3-8B-Instruct.Q4_0.gguf")
-        print("✅ Language model loaded!")
+        print(" Language model loaded!")
         
     def parse_query(self, user_query: str) -> Dict:
         """
@@ -143,13 +143,13 @@ class SurveillanceQueryEngine:
         Returns:
             Query results with metadata
         """
-        print(f"\n💬 User Query: '{user_query}'")
+        print(f"\n User Query: '{user_query}'")
         
         # Parse query
         parsed = self.parse_query(user_query)
         print(f"🔍 Detected intent: {parsed['intent']}")
         if parsed['filters']:
-            print(f"🏷️  Filters: {parsed['filters']}")
+            print(f"  Filters: {parsed['filters']}")
         
         # Execute search based on intent
         results = None
@@ -222,7 +222,7 @@ Keep the response under 150 words and be specific.
 
 Answer:"""
         
-        print("🤖 Generating response...")
+        print(" Generating response...")
         
         # Generate response
         response = self.llm.generate(
@@ -280,32 +280,32 @@ class InteractiveSurveillanceChat:
     def chat(self):
         """Start interactive chat session"""
         print("\n" + "=" * 70)
-        print("🎯 SMART SURVEILLANCE - INTERACTIVE QUERY SYSTEM")
+        print(" SMART SURVEILLANCE - INTERACTIVE QUERY SYSTEM")
         print("=" * 70)
-        print("\n💡 You can ask questions like:")
+        print("\n You can ask questions like:")
         examples = self.query_engine.get_query_examples()
         for i, example in enumerate(examples[:5], 1):
             print(f"   {i}. {example}")
         
-        print("\n📝 Type 'examples' to see more query examples")
-        print("📝 Type 'quit' or 'exit' to stop\n")
+        print("\n Type 'examples' to see more query examples")
+        print(" Type 'quit' or 'exit' to stop\n")
         
         while True:
             try:
                 # Get user input
-                user_input = input("🙋 You: ").strip()
+                user_input = input(" You: ").strip()
                 
                 if not user_input:
                     continue
                 
                 # Check for exit commands
                 if user_input.lower() in ['quit', 'exit', 'q']:
-                    print("\n👋 Goodbye!")
+                    print("\n Goodbye!")
                     break
                 
                 # Show examples
                 if user_input.lower() == 'examples':
-                    print("\n💡 Example Queries:")
+                    print("\n Example Queries:")
                     for i, example in enumerate(self.query_engine.get_query_examples(), 1):
                         print(f"   {i}. {example}")
                     print()
@@ -315,7 +315,7 @@ class InteractiveSurveillanceChat:
                 print()  # Blank line for readability
                 response = self.query_engine.query(user_input)
                 
-                print(f"\n🤖 Assistant: {response}\n")
+                print(f"\n Assistant: {response}\n")
                 print("-" * 70 + "\n")
                 
                 # Save to history
@@ -326,29 +326,29 @@ class InteractiveSurveillanceChat:
                 })
                 
             except KeyboardInterrupt:
-                print("\n\n👋 Goodbye!")
+                print("\n\n Goodbye!")
                 break
             except Exception as e:
-                print(f"\n❌ Error: {str(e)}")
+                print(f"\n Error: {str(e)}")
                 print("Please try again with a different query.\n")
 
 
 # Main execution and testing
 if __name__ == "__main__":
     print("=" * 70)
-    print("🎯 NATURAL LANGUAGE QUERY ENGINE - SETUP & TESTING")
+    print(" NATURAL LANGUAGE QUERY ENGINE - SETUP & TESTING")
     print("=" * 70)
     
     # Initialize components
-    print("\n📦 Initializing components...")
+    print("\n Initializing components...")
     vector_store = SurveillanceVectorStore('data/outputs/chroma_db')
     query_engine = SurveillanceQueryEngine(vector_store)
     
-    print("\n✅ Query engine ready!")
+    print("\n Query engine ready!")
     
     # Test queries
     print("\n" + "=" * 70)
-    print("🧪 TESTING QUERIES")
+    print(" TESTING QUERIES")
     print("=" * 70)
     
     test_queries = [
@@ -368,11 +368,11 @@ if __name__ == "__main__":
         print(f"\n🤖 Response:\n{response}")
     
     print("\n" + "=" * 70)
-    print("✅ TESTING COMPLETE!")
+    print(" TESTING COMPLETE!")
     print("=" * 70)
     
     # Start interactive mode
-    print("\n🎮 Starting interactive mode...")
+    print("\n Starting interactive mode...")
     print("(You can quit anytime by typing 'quit')\n")
     
     chat = InteractiveSurveillanceChat(query_engine)
