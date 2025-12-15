@@ -221,7 +221,7 @@ class SurveillanceDetector:
         with open(output_json, 'w') as f:
             json.dump(all_events, f, indent=2)
         
-        print(f"\n✅ Processing complete!")
+        print(f"\n Processing complete!")
         print(f"Total frames processed: {processed_count}")
         print(f"Total detections: {len(all_events)}")
         print(f"Results saved to: {output_json}")
@@ -249,7 +249,7 @@ if __name__ == "__main__":
     )
     
     # Print summary
-    print("\n📊 Detection Summary:")
+    print("\n Detection Summary:")
     object_counts = {}
     for event in events:
         obj_type = event['object_type']
