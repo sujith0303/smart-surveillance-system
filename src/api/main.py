@@ -45,14 +45,14 @@ async def startup_event():
     """Initialize system on startup"""
     global vector_store, query_engine
     
-    print("🚀 Initializing Smart Surveillance API...")
-    print("📦 Loading vector store...")
+    print(" Initializing Smart Surveillance API...")
+    print(" Loading vector store...")
     vector_store = SurveillanceVectorStore(chroma_path)
     
-    print("🤖 Loading query engine...")
+    print(" Loading query engine...")
     query_engine = SurveillanceQueryEngine(vector_store)
     
-    print("✅ API ready!")
+    print(" API ready!")
 
 # Request/Response Models
 class QueryRequest(BaseModel):
@@ -400,9 +400,9 @@ async def get_statistics():
 if __name__ == "__main__":
     import uvicorn
     
-    print("🚀 Starting Smart Surveillance API Server...")
-    print("📡 Server will be available at: http://localhost:8000")
-    print("📚 API documentation: http://localhost:8000/docs")
-    print("🔍 Alternative docs: http://localhost:8000/redoc")
+    print(" Starting Smart Surveillance API Server...")
+    print(" Server will be available at: http://localhost:8000")
+    print(" API documentation: http://localhost:8000/docs")
+    print(" Alternative docs: http://localhost:8000/redoc")
     
     uvicorn.run(app, host="0.0.0.0", port=8000)
