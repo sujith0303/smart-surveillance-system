@@ -50,13 +50,13 @@ class SurveillanceTracker:
         """
         # Check if video exists
         if not os.path.exists(video_path):
-            print(f"❌ Error: Video not found at {video_path}")
+            print(f" Error: Video not found at {video_path}")
             return None
         
         cap = cv2.VideoCapture(video_path)
         
         if not cap.isOpened():
-            print(f"❌ Error: Could not open video {video_path}")
+            print(f" Error: Could not open video {video_path}")
             return None
             
         fps = cap.get(cv2.CAP_PROP_FPS)
@@ -64,7 +64,7 @@ class SurveillanceTracker:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         
-        print(f"🎥 Video Info:")
+        print(f" Video Info:")
         print(f"   Resolution: {width}x{height}")
         print(f"   FPS: {fps}")
         print(f"   Total Frames: {total_frames}")
@@ -159,7 +159,7 @@ class SurveillanceTracker:
                       f"{len(self.track_history)} unique tracks")
             
             if max_frames and processed_count >= max_frames:
-                print(f"⚠️  Reached max frames limit: {max_frames}")
+                print(f"  Reached max frames limit: {max_frames}")
                 break
             
             frame_count += 1
@@ -167,7 +167,7 @@ class SurveillanceTracker:
         cap.release()
         if out is not None:
             out.release()
-            print(f"✅ Annotated video saved: {output_video}")
+            print(f" Annotated video saved: {output_video}")
         
         # Generate tracking report
         report = self._generate_tracking_report()
@@ -181,8 +181,8 @@ class SurveillanceTracker:
         with open(output_json, 'w') as f:
             json.dump(report, f, indent=2)
         
-        print(f"\n✅ Tracking complete!")
-        print(f"📊 Results:")
+        print(f"\n Tracking complete!")
+        print(f" Results:")
         print(f"   Unique tracks: {len(self.track_history)}")
         print(f"   Suspicious tracks: {report['summary']['suspicious_tracks']}")
         print(f"   Total behaviors detected: {sum(len(t['behaviors']) for t in self.track_history.values())}")
@@ -404,7 +404,7 @@ if __name__ == "__main__":
     
     if report:
         print("\n" + "=" * 60)
-        print("📊 TRACKING SUMMARY")
+        print(" TRACKING SUMMARY")
         print("=" * 60)
         print(f"Total unique objects tracked: {report['summary']['total_tracks']}")
         print(f"Suspicious behaviors detected: {report['summary']['suspicious_tracks']}")
@@ -412,7 +412,7 @@ if __name__ == "__main__":
         
         # Show some example tracks
         if report['tracks']:
-            print(f"\n📋 Sample Tracks (first 5):")
+            print(f"\n Sample Tracks (first 5):")
             for track in report['tracks'][:5]:
                 print(f"\n  Track ID {track['track_id']}:")
                 print(f"    Type: {track['attributes'].get('type', 'unknown')}")
@@ -420,8 +420,8 @@ if __name__ == "__main__":
                 print(f"    Duration: {track['duration']:.1f}s")
                 print(f"    Detections: {track['total_detections']}")
                 if track['behaviors']:
-                    print(f"    ⚠️  Behaviors: {[b['type'] for b in track['behaviors']]}")
+                    print(f"      Behaviors: {[b['type'] for b in track['behaviors']]}")
         
-        print("\n✅ All results saved!")
+        print("\n All results saved!")
         print(f"   JSON report: data/outputs/tracking_report.json")
         print(f"   Video output: data/outputs/tracked_output.mp4")
