@@ -324,7 +324,7 @@ MIT License - Feel free to use for learning and portfolio purposes
 **Sujith Reddy Bommareddy**
 - GitHub: [@sujith0303](https://github.com/sujith0303)
 - Email: bsujithreddy@gmail.com
-- LinkedIn: [Your LinkedIn]
+- LinkedIn: linkedin.com/in/sujith-reddy-bommareddy-8b75572b8
 
 ## 🙏 Acknowledgments
 
